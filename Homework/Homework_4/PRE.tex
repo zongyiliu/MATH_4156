@@ -1,1 +1,170 @@
+\begin{center}
+    \textbf{ADVANCED PROBABILITY THEORY} \\
+    GU 4156: Spring 2025 \\
+    \textbf{HOMEWORK \# 4} \\
+    Professor Ioannis Karatzas \\
+    Department of Mathematics, Columbia University \\
+    February 21, 2025
+\end{center}
 
+This assignment deals with some aspects and applications of Martingale Theory that we have not been able to discuss in detail in class.
+
+\textbf{Exercise \# 1: Two Equivalent Properties.} Consider a countable set $S$, a stochastic matrix$^1$ $P = \left(p_{ij}\right)_{(i,j) \in S \times S}$, and a sequence of random variables $\left(X_n\right)_{n \in \mathbb{N}_0}$ with values in $S$.
+
+For any given bounded$^2$ function $f : S \to \mathbb{R}$, we define a new function
+\begin{equation}
+    Pf(i) := \sum_{j \in S} p_{ij}\, f(j), \qquad i \in S;
+\end{equation}
+we say that $f$ is \textit{harmonic} (respectively, \textit{superharmonic}, \textit{subharmonic}) for the stochastic matrix $P$, if $Pf(i) = f(i)$ (resp., $\geq$, $\leq$) holds for every $i \in S$. We define also a sequence of random variables via $M^f_0 := 0$ and
+\begin{equation}
+    M^f_n := f(X_n) - f(X_0) - \sum_{m=0}^{n-1} \left[Pf(X_m) - f(X_m)\right], \qquad n \in \mathbb{N}.
+\end{equation}
+
+\begin{itemize}
+    \item[(i)] Suppose that $\left(X_n\right)_{n \in \mathbb{N}_0}$ is a time-homogeneous Markov Chain with state-space $S$, transition matrix $P$. Show that $\left(M^f_n\right)_{n \in \mathbb{N}_0}$ in (0.2) satisfies then the martingale property
+    \begin{equation}
+        \mathbb{E}\!\left[M^f_{n+1} - M^f_n \;\middle|\; X_0 = x_0,\, X_1 = x_1,\, \cdots,\, X_n = x_n\right] = 0, \quad \forall\, (x_0, x_1, \cdots, x_n) \in S^{n+1},\; n \in \mathbb{N}_0.
+    \end{equation}
+
+    \item[(ii)] Conversely, argue that the validity of the property (0.3) for every bounded function $f : S \to \mathbb{R}$, implies that the random sequence $\left(X_n\right)_{n \in \mathbb{N}_0}$ is a time-homogeneous Markov Chain with state-space $S$ and transition probability matrix $P$.
+
+    \item[(iii)] In the setting of (i), assume that $f : S \to \mathbb{R}$ is harmonic (respectively, superharmonic, subharmonic). Argue that the random sequence $\left(f(X_n)\right)_{n \in \mathbb{N}_0}$ has then the martingale (respectively, supermartingale, submartingale) property
+    \[
+        \mathbb{E}\!\left[f(X_{n+1}) \;\middle|\; X_0 = x_0,\, X_1 = x_1,\, \cdots,\, X_n = x_n\right] = f(x_n), \quad (\text{resp., } \leq,\, \geq)
+    \]
+    for every $(x_0, x_1, \cdots, x_n) \in S^{n+1}$, $n \in \mathbb{N}_0$.
+\end{itemize}
+
+\textbf{Exercise \# 2: Feynman-Kac-type Representation of Potentials.} Suppose $(X_n)_{n \geq 0}$ is an irreducible Markov Chain with finite state space $I$ and transition matrix $P$.
+
+We fix a nonempty subset $A \subset I$ of absorbing, or ``boundary'', states in $I$, which we interpret as the ``boundary'' of the state space. We consider also the set of ``interior'' states $D := I \setminus A$, and two given functions $F : A \to \mathbb{R}$ and $g : D \to \mathbb{R}$. We define now the absorption time
+\[
+    T := \min\left\{n \geq 0 : X_n \in A\right\},
+\]
+i.e., the first time the chain reaches the boundary of the state space.
+
+Suppose now that there exists a function $f : I \to \mathbb{R}$ with the properties
+\begin{align}
+    f(x) &= F(x), \qquad x \in A, \\
+    f(x) - Pf(x) &= g(x), \qquad x \in D.
+\end{align}
+We call such a function $f$ a \textit{potential} associated with the pair $(F, g)$.$^3$
+
+\begin{itemize}
+    \item[(a)] Argue that, for ANY such potential, the random sequence $(M_n)_{n \geq 0}$ with
+    \[
+        M_0 = f(X_0)\,; \qquad M_n = f(X_{T \wedge n}) + \sum_{k=0}^{n-1} g(X_k)\, \mathbf{1}_{\{k < T\}}, \quad n = 1, 2, \cdots
+    \]
+    is a martingale, and specify the filtration for which this statement holds.
+
+    \item[(b)] Derive from this, the Feynman-Kac-type representation
+    \begin{equation}
+        f(x) = \mathbb{E}_x\!\left[F(X_T) + \sum_{j=0}^{T-1} g(X_j)\right], \qquad x \in I
+    \end{equation}
+    for any potential $f$ associated with the pair $(F, g)$ as in (0.4), (0.5). The understanding here, is that we take the summation $\sum_{j=0}^{T-1} g(X_j)$ in (0.6) to be equal to zero, on the event $\{T = 0\}$.
+
+    (\textit{Hint:} Recall optional sampling. In the above expression (0.6), an empty sum is interpreted as being identically equal to zero.)
+
+    \item[(c)] Argue that the function $\psi$, defined for each $x \in I$ by the right-hand-side of (0.6), is a potential associated with the given pair $(F, g)$; to wit, satisfies the equations (0.4), (0.5). Conclude that there exists exactly one such potential.
+\end{itemize}
+
+\textbf{Interpretation:} We have called the function $f$ the potential associated with the ``boundary function'' $F$ and the ``interior function'' $g$, in the manner of the system (0.4), (0.5). A very natural interpretation for $F$ and $g$ is in terms of ``costs'': the chain moves around in $D$, incurring a cost $g(x) = f(x) - Pf(x)$ per unit time, as long as $x \in D$. When it hits the boundary $A$ and gets absorbed there, say at some point $z \in A$, it incurs a terminal cost $F(z)$. If the chain starts its journey in state $x$, then the quantity $f(x)$ is just the expected cost it accumulates along its journey, according to the result in (b).
+
+\textbf{Exercise \# 3:} Let $(X_n)_{n \geq 0}$ be an irreducible, aperiodic Markov Chain, with state space $I = \{1, 2, \cdots, N\}$ for some given integer $N$. Show that
+\begin{itemize}
+    \item[(a)] there exist numbers $C \in [0, \infty)$ and $\varrho \in (0,1)$ such that the inequality
+    \[
+        \mathbb{P}_i\!\left(X_m \neq j,\; \forall\, m = 0, 1, \cdots, n\right) \leq C\varrho^n, \qquad \forall\, n \geq 0
+    \]
+    holds for all states $i$ and $j$; and that
+
+    \item[(b)] this implies that the first time $T_j := \min\{n \geq 1 : X_n = j\}$ the chain visits the state $j$, has finite expectation: $\mathbb{E}_i(T_j) < \infty$.
+
+    (\textit{Hint:} There exists a number $\delta > 0$ such that, for all states $i$, the probability of reaching any given state $j$ starting from $i$ is greater than $\delta$. Why is this true?)
+\end{itemize}
+
+\textbf{Exercise \# 4:} A backwards submartingale $Y = \{Y_0, Y_1, \cdots\}$ is uniformly integrable, if the quantity $\ell := \lim_{n \to \infty} \downarrow \mathbb{E}(Y_n)$ is finite, i.e., if $\ell > -\infty$ holds.
+
+\textbf{Exercise \# 5: The Reckless ``Double-Or-Nothing'' Gambler.} Consider the simple, symmetric random walk $S = \left(S_n\right)_{n \geq 0}$ on the integers with $S_0 = 0$, and with $X_n := S_n - S_{n-1}$, $n \geq 1$ I.I.D. random variables with $\mathbb{P}(X_1 = \pm 1) = 1/2$.
+
+Consider also a compulsive, reckless gambler (who has behind him an entire bank to back him up). He uses the betting strategy given by $B_1 = 1$ and
+\[
+    B_n := 2^{n-1}, \quad \text{if } X_1 = \cdots = X_{n-1} = -1\,; \qquad := 0, \quad \text{otherwise}
+\]
+for $n \geq 2$. In other words, having started with a stake of $\$1 = B_1$, this fellow doubles the stakes after each loss; and ``declares victory and goes home'' after the first win. This generates for him a wealth $\left(V_n\right)_{n \geq 0}$ given by $V_0 = 0$ and
+\[
+    V_n = \sum_{j=1}^{n} B_j X_j = \sum_{j=1}^{n} B_j \left(S_j - S_{j-1}\right), \qquad n \geq 1.
+\]
+
+\begin{itemize}
+    \item[(a)] Argue that $\left(V_n\right)_{n \geq 0}$ is a martingale with respect to the filtration generated by the random walk (or, equivalently, its increments).
+
+    \item[(b)] For $n \geq 2$, compute $V_{n-1}$ on the event $\{X_1 = \cdots = X_{n-1} = -1\}$. Also, compute $V_n$ on the event $\{X_1 = \cdots = X_{n-1} = -1,\, X_n = 1\}$.
+
+    \item[(c)] With $T := \min\{n \geq 1 : X_n = 1\}$ the first time a success occurs, argue that we have
+    \[
+        \mathbb{P}\!\left(V_T = 1 > 0 = V_0\right) = 1.
+    \]
+    Does this contradict the optional sampling theorem proved in class? If yes, why? If not, why not?
+\end{itemize}
+
+\textbf{Exercise \# 6: The Martingale Representation Property of the Simple Random Walk.} Consider the simple random walk $S = \left(S_n\right)_{n \geq 0}$ on the integers, which moves to the right with probability $p \in (0,1)$, and to the left with probability $1-p$:
+\[
+    S_0 = 0\,; \qquad S_n = \sum_{j=1}^{n} X_j, \quad n = 1, 2, \cdots.
+\]
+Here $X_1, X_2, \cdots$ are I.I.D. random variables with $\mathbb{P}(X_1 = +1) = 1 - \mathbb{P}(X_1 = -1) = p$. Recall the martingale
+\[
+    Q_n := S_n - (2p-1)\,n, \qquad n = 0, 1, 2, \cdots
+\]
+of the filtration $\mathbb{F} = \left(\mathcal{F}_n\right)_{n \geq 0}$ generated by the random walk, namely,
+\[
+    \mathcal{F}_0 := \sigma(S_0) = \{\emptyset, \Omega\}\,; \qquad \mathcal{F}_n := \sigma(S_1, \cdots, S_n) = \sigma(X_1, \cdots, X_n), \quad n \geq 1.
+\]
+Show then that every martingale $M = \left(M_n\right)_{n \geq 0}$ of this filtration can be written as the transform
+\[
+    M_n = M_0 + \sum_{j=1}^{n} \vartheta_j\left(Q_j - Q_{j-1}\right) = M_0 + \sum_{j=1}^{n} \vartheta_j\left(X_j - (2p-1)\right), \qquad n = 1, 2, \cdots
+\]
+of this ``basic'' martingale $Q$, by a suitable random sequence $\Theta = \left(\vartheta_n\right)_{n \geq 0}$ which is \textit{predictable}: each random variable $\vartheta_n$ is $\mathcal{F}_{n-1}$-measurable, for every integer $n \geq 1$; and $\vartheta_0$ is $\mathcal{F}_0$-measurable. Construct this predictable random sequence $\Theta$ as explicitly as you can.
+
+\textbf{Exercise \# 7: Absorption of Nonnegative Supermartingales.} Let $X = \left(X_n\right)_{n \in \mathbb{N}_0}$ be a nonnegative supermartingale. Show that the origin is an absorbing state for $X$ in the sense that, with
+\[
+    T := \min\left\{n \in \mathbb{N}_0 : X_n = 0\right\} \quad \left(T := \infty, \text{ if } \{\cdots\} = \emptyset\right),
+\]
+\[
+    X_{T+k} = 0, \qquad \forall\, k \in \mathbb{N}_0
+\]
+holds $\mathbb{P}$-a.e.\ on $\{T < \infty\}$.
+
+\textbf{Exercise \# 8: Likelihood Ratios.} On a filtered measurable space $(\Omega, \mathcal{F})$, $\mathbb{F} = \left(\mathcal{F}_n\right)_{n \in \mathbb{N}_0}$ with $\mathcal{F}_0 = \{\emptyset, \Omega\}$, consider two probability measures $\mathbb{P}$ and $\mathbb{Q}$. For each $n \in \mathbb{N}_0$, we
+\begin{itemize}
+    \item[$\cdot$] denote by $\mathbb{P}_n := \mathbb{P}\big|_{\mathcal{F}_n}$, $\mathbb{Q}_n := \mathbb{Q}\big|_{\mathcal{F}_n}$ the restrictions of $\mathbb{P}$ and $\mathbb{Q}$, respectively, on $\mathcal{F}_n$;
+    \item[$\cdot$] suppose $\mathbb{Q}_n \ll \mathbb{P}_n$ (absolute continuity);$^4$ and
+    \item[$\cdot$] introduce the respective Radon-Nikod\'ym derivative (a.k.a.\ ``likelihood ratio'')
+    \[
+        Z_n := \frac{d\mathbb{Q}_n}{d\mathbb{P}_n} = \frac{d\mathbb{Q}}{d\mathbb{P}}\bigg|_{\mathcal{F}_n}.
+    \]
+    This is the $\mathbb{P}$-a.e.\ unique $\mathcal{F}_n$-measurable random variable that satisfies
+    \begin{equation}
+        \mathbb{Q}_n(A) \equiv \mathbb{Q}(A) = \mathbb{E}^{\mathbb{P}}\!\left[Z_n \cdot \mathbf{1}_A\right], \qquad \forall\, A \in \mathcal{F}_n.
+    \end{equation}
+\end{itemize}
+
+\begin{itemize}
+    \item[(i)] Argue that $Z_0 = 1$.
+
+    \item[(ii)] Argue that the resulting sequence $Z = \left(Z_n\right)_{n \in \mathbb{N}_0}$ is a $(\mathbb{P}, \mathbb{F})$-martingale.
+
+    (\textit{Hint:} Write down the definition of the martingale property, and recall the definition of conditional expectation.)
+
+    \item[(iii)] Argue that the limit $Z^* := \lim_{n \to \infty} Z_n$ exists, $\mathbb{P}$-a.e.$^5$
+
+    \item[(iv)] Argue that $\mathbb{E}^{\mathbb{P}}(Z^*) \leq 1$.
+
+    \item[(v)$^*$] (Optional): What do you think it would take for $\mathbb{E}^{\mathbb{P}}(Z^*) = 1$ to hold?
+\end{itemize}
+
+\footnotetext[1]{With all entries non-negative, and adding up to 1 across every row.}
+\footnotetext[2]{Meaning that for some $K \in (0,\infty)$, we have $|f(i)| \leq K$ for all $i \in S$.}
+\footnotetext[3]{Finding a potential associated with a given pair $(F,g)$ as in (0.4), (0.5) amounts to solving a discrete analogue of the Dirichlet problem for the analogue $\Delta = I - P$ of the Laplacian in the present context.}
+\footnotetext[4]{\textit{Caveat Lector}: $\mathbb{Q}_n \ll \mathbb{P}_n$ (i.e., $\mathbb{Q} \ll \mathbb{P}$ on $\mathcal{F}_n$) for every $n \in \mathbb{N}_0$, need not imply $\mathbb{Q} \ll \mathbb{P}$ on $\mathcal{F}$.}
+\footnotetext[5]{Recall here the basic convergence theorem discussed in detail in class: ``For every $\mathbb{P}$-supermartingale $\{X_n\}_{n \in \mathbb{N}_0}$ with $\sup_{n \in \mathbb{N}_0} \mathbb{E}^{\mathbb{P}}(X_n^-) < \infty$, the limit $X_\infty := \lim_{n \to \infty} X_n$ exists, $\mathbb{P}$-a.e., and $\mathbb{E}^{\mathbb{P}}(|X_\infty|) < \infty$.''}
